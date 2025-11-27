@@ -148,10 +148,6 @@ uninstall_xray() {
     fi
 
     rm -rf "$XRAY_BIN" /etc/xray "$CERT_DIR"
-
-    # 删除快捷菜单脚本
-    rm -f /usr/local/bin/xray-menu
-
     green "🎉 Xray 已完全卸载。"
     exit 0
 }
@@ -314,18 +310,6 @@ main() {
     generate_self_signed_cert
     generate_config
     setup_and_start_xray
-
-    # 快捷菜单脚本创建&提示
-    MENU_SHORTCUT="/usr/local/bin/xray-menu"
-    MYSELF="$(readlink -f "$0")"
-    cat > "$MENU_SHORTCUT" <<EOF
-#!/bin/sh
-exec bash "$MYSELF"
-EOF
-    chmod +x "$MENU_SHORTCUT"
-    green "✅ 已创建快捷菜单命令: xray-menu"
-    yellow "以后只需输入 xray-menu 即可快速进入Xray管理菜单"
-
     show_vmess_link
 }
 
